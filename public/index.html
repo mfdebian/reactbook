@@ -12,6 +12,21 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
     <title>Reactbook</title>
+
+    <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyB-H8mAY5tCwuOVdsMEvQ4ijryvXSa4NUc",
+        authDomain: "reactbook-laboratoria.firebaseapp.com",
+        databaseURL: "https://reactbook-laboratoria.firebaseio.com",
+        projectId: "reactbook-laboratoria",
+        storageBucket: "reactbook-laboratoria.appspot.com",
+        messagingSenderId: "934259521693"
+      };
+      firebase.initializeApp(config);
+    </script>
+
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
