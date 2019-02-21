@@ -1,33 +1,32 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+// Redux libraries
+import { connect } from 'react-redux';
+
+// Actions
+import { fetchPosts } from '../actions/postActions';
 
 /**
- * Posts
- */
+* Posts
+*/
 class Posts extends Component { // eslint-disable-line react/prefer-stateless-function
-    constructor(props) {
-        super(props);
-        // 'State' is a javascipt object containing our Posts array
-        this.state = {
-            posts: []
-        }
-    }
+  componentWillMount() {
+    this.props.fetchPosts();
+  }
 
-    // When component 'starts' (i.e mount) it'll fetch (GET) posts
-    // TODO: Replace fake JSON posts for Firebase database Posts
-    componentWillMount() {
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(res=> res.json())
-            .then(data => this.setState({ posts: data }));
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.newPost) {
+      this.props.posts.unshift(nextProps.newPost);
     }
+  }
 
   render() {
     // We'll show posts in postItems
-    const postItems = this.state.posts.map(post => (
-        <div key ={post.id}>
-            <h3>{post.title}</h3>
-            <p>{post.body}</p>
-            <p>{post.userId}</p>
-        </div>
+    const postItems = this.props.posts.map(post => (
+      <div key ={post.id}>
+        <h3>{post.title}</h3>
+        <p>{post.body}</p>
+      </div>
     ));
 
     return (
@@ -37,10 +36,21 @@ class Posts extends Component { // eslint-disable-line react/prefer-stateless-fu
       </div>
     );
   }
+
 }
 
-// Posts.propTypes = {
-//   prop: PropTypes.type.isRequired
-// }
+// Component's properties types
+Posts.propTypes = {
+  fetchPosts: PropTypes.func.isRequired,
+  posts: PropTypes.array.isRequired,
+  newPost: PropTypes.object.isRequired
+};
 
-export default Posts;
+// Get (map) items from state from redux to props of the Posts component
+// state.posts name comes from rootReducer's postReducer
+const mapStateToProps = state => ({
+  posts: state.posts.items,
+  newPost: state.posts.item
+});
+
+export default connect(mapStateToProps, { fetchPosts })(Posts);

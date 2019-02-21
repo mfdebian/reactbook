@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+// Redux libraries
+import { connect } from 'react-redux';
+
+// Actions
+import { createPost } from '../actions/postActions';
 
 /**
  * PostForm
@@ -10,7 +16,7 @@ class PostForm extends Component { // eslint-disable-line react/prefer-stateless
     this.state = {
       title: '',
       body: '',
-      author: 'autor',
+      // author: 'autor',
     };
     // Bind parameters to the onChange event listener function
     this.onChange = this.onChange.bind(this);
@@ -19,7 +25,7 @@ class PostForm extends Component { // eslint-disable-line react/prefer-stateless
   }
 
   onChange(event) {
-      this.setState({[event.target.name]: event.target.value});
+    this.setState({[event.target.name]: event.target.value});
   }
 
   onSubmit(event) {
@@ -28,20 +34,11 @@ class PostForm extends Component { // eslint-disable-line react/prefer-stateless
       const post = {
           title: this.state.title,
           body: this.state.body,
-          author: this.state.author,
-      }
+      };
 
-      // fetch (POST) posts to submit another post
-      // TODO: Replace fake JSON posts for Firebase database Posts
-      fetch('https://jsonplaceholder.typicode.com/posts', {
-          method: 'POST',
-          headers: {
-              'content-type': 'application/json'
-          },
-          body: JSON.stringify(post)
-      })
-        .then(res => res.json())
-        .then(data => console.log(data));
+      // Call post's POST action
+      this.props.createPost(post);
+
   }
 
   render() {
@@ -49,30 +46,32 @@ class PostForm extends Component { // eslint-disable-line react/prefer-stateless
       <div>
         <h1> Add Post </h1>
         <form onSubmit={this.onSubmit}>
-            <div>
-                <label> Title: </label> <br />
-                <input
-                    type = "text"
-                    name = "title"
-                    value = { this.state.title }
-                    onChange = { this.onChange }
-                 />
-            </div>
-
+          <div>
+            <label> Title: </label>
             <br />
+            <input
+              type = "text"
+              name = "title"
+              value = { this.state.title }
+              onChange = { this.onChange }
+             />
+          </div>
 
-            <div>
-                <label> Body: </label> <br />
-                <textarea
-                    name="body"
-                    value = { this.state.body }
-                    onChange = { this.onChange }
-                />
-            </div>
+          <br />
 
+          <div>
+            <label> Body: </label>
             <br />
+            <textarea
+              name="body"
+              value = { this.state.body }
+              onChange = { this.onChange }
+            />
+          </div>
 
-            <button type="submit"> Post </button>
+          <br />
+
+          <button type="submit"> Post </button>
 
         </form>
       </div>
@@ -80,5 +79,9 @@ class PostForm extends Component { // eslint-disable-line react/prefer-stateless
   }
 }
 
+// Component's properties types
+PostForm.propTypes = {
+  createPost: PropTypes.func.isRequired,
+};
 
-export default PostForm;
+export default connect(null, { createPost })(PostForm);
