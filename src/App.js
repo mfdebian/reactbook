@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+// . directory is 'here' which is /src
+import Posts from './components/Posts';
+import PostForm from './components/Postform';
+
 class App extends Component {
   render() {
     return (
@@ -11,14 +15,10 @@ class App extends Component {
           <p>
             Hello world
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <PostForm />
+          <br />
+          <hr />
+          <Posts />
         </header>
       </div>
     );
