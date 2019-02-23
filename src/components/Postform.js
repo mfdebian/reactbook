@@ -14,31 +14,34 @@ class PostForm extends Component { // eslint-disable-line react/prefer-stateless
     super(props);
     // TODO: GET author of post (i.e userID)
     this.state = {
-      title: '',
       body: '',
       // author: 'autor',
     };
+
     // Bind parameters to the onChange event listener function
     this.onChange = this.onChange.bind(this);
     // Bind parameters to the onSubmit event listener function
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  // Displays what's written into the post textarea
   onChange(event) {
     this.setState({[event.target.name]: event.target.value});
   }
 
+  // Submit post handler
   onSubmit(event) {
       event.preventDefault();
 
       const post = {
-          title: this.state.title,
-          body: this.state.body,
+        body: this.state.body,
       };
 
       // Call post's POST action
       this.props.createPost(post);
 
+    // Should return to initial state, this hack will do for now
+    this.setState({body: ''});
   }
 
   render() {
@@ -46,17 +49,6 @@ class PostForm extends Component { // eslint-disable-line react/prefer-stateless
       <div>
         <h1> Add Post </h1>
         <form onSubmit={this.onSubmit}>
-          <div>
-            <label> Title: </label>
-            <br />
-            <input
-              type = "text"
-              name = "title"
-              value = { this.state.title }
-              onChange = { this.onChange }
-             />
-          </div>
-
           <br />
 
           <div>

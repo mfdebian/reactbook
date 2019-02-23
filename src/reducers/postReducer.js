@@ -1,4 +1,4 @@
-import { FETCH_POSTS, NEW_POST } from '../actions/types';
+import { FETCH_POSTS } from '../actions/types';
 
 const initialState = {
   // items represents the posts and item represents a single post
@@ -13,12 +13,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         items: action.payload
-      };
-
-    case NEW_POST:
-      return {
-        ...state,
-        item: action.payload
       };
 
     default:

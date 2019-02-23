@@ -1,33 +1,37 @@
-import { FETCH_POSTS, NEW_POST } from './types';
+// Database collections
+import { postsRef } from '../config/firebase';
+
+
+// Types of actions
+import { FETCH_POSTS } from './types';
 
 // Asynchronous call to GET posts
-// TODO: Replace fake JSON posts for Firebase database Posts
-export const fetchPosts = () => dispatch => {
-  fetch('https://jsonplaceholder.typicode.com/posts')
-    .then(res => res.json())
-    .then(posts =>
-      dispatch({
-        type: FETCH_POSTS,
-        payload: posts
-      })
-    );
+export const fetchPosts = () => async dispatch => {
+  postsRef.on("value", snapshot => {
+    let data = snapshot.val();
+    let posts = [];
+    for(var k in data) {
+
+      let post = {
+        id: k,
+        body: data[k].body
+      };
+      posts.push(post)
+    };
+
+    dispatch({
+      type: FETCH_POSTS,
+      payload: posts
+    })
+
+  });
 };
 
 // Asynchronous call to POST posts
-// TODO: Replace fake JSON posts for Firebase database Posts
-export const createPost = postData => dispatch => {
-  fetch('https://jsonplaceholder.typicode.com/posts', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json'
-    },
-    body: JSON.stringify(postData)
-  })
-    .then(res => res.json())
-    .then(post =>
-      dispatch({
-        type: NEW_POST,
-        payload: post
-      })
-    );
+export const createPost = postData => async dispatch => {
+  postsRef.push().set(postData);
+};
+
+export const deletePost = deletePostId => async dispatch => {
+  postsRef.child(deletePostId).remove();
 };
