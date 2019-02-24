@@ -18,6 +18,8 @@ export const fetchPosts = () => async dispatch => {
       };
       posts.push(post)
     };
+    
+    posts = posts.reverse()
 
     dispatch({
       type: FETCH_POSTS,

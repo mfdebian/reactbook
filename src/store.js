@@ -9,14 +9,15 @@ const initialState = {};
 
 const middleware = [thunk];
 
-// compose will be used for multiple 'enhancers'
-// including the one for Firefox's Redux extension
+// Firefox's devtools extension
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+// composeEnhancers will be used for multiple 'enhancers'
 const store = createStore(
   rootReducer,
   initialState,
-  compose(
-    applyMiddleware(...middleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeEnhancers(
+    applyMiddleware(...middleware)
   )
 );
 
