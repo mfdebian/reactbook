@@ -20,7 +20,6 @@ class App extends Component {
         <div className="App">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
-            <h3>Login should go here.</h3>
             <PostForm />
             <br />
             <hr />

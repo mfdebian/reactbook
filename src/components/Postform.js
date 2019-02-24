@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import './posts.css'
+
 // Redux libraries
 import { connect } from 'react-redux';
 
@@ -47,24 +49,18 @@ class PostForm extends Component { // eslint-disable-line react/prefer-stateless
   render() {
     return (
       <div>
-        <h1> Add Post </h1>
         <form onSubmit={this.onSubmit}>
           <br />
-
           <div>
-            <label> Body: </label>
-            <br />
             <textarea
               name="body"
+              className="post-textarea"
+              placeholder="¿Qué quieres compartir?"
               value = { this.state.body }
               onChange = { this.onChange }
             />
           </div>
-
-          <br />
-
-          <button type="submit"> Post </button>
-
+          <button type="submit" className="btn"> Post </button>
         </form>
       </div>
     );

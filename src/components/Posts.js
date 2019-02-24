@@ -32,9 +32,10 @@ class Posts extends Component { // eslint-disable-line react/prefer-stateless-fu
     // We'll show posts in postItems
     const postItems = this.props.posts.map(post => (
       <div key ={post.id}>
-        <p>{post.body}</p>
+        <p className="card-5">{post.body}</p>
         <button
           type="submit"
+          className="btn red"
           onClick = {() => this.handleDeletePost(post.id)}
         > Delete post </button>
       </div>
@@ -43,7 +44,7 @@ class Posts extends Component { // eslint-disable-line react/prefer-stateless-fu
 
     return (
       <div>
-        <h1> Posts </h1>
+        <h1> Reactbook wall </h1>
         { postItems }
         <br />
       </div>
